@@ -66,8 +66,8 @@ def record():
 def transcribe(audio_buf):
     result = client.audio.transcriptions.create(
         file=("recording.wav", audio_buf, "audio/wav"),
-        model=STT_MODEL, language="zh", response_format="text",
-        prompt="繁體中文，台灣用語",
+        model=STT_MODEL, response_format="text",
+        prompt="繁體中文，台灣用語。Use Traditional Chinese for Chinese, keep other languages as-is.",
     )
     return result.strip() if isinstance(result, str) else result.text.strip()
 
