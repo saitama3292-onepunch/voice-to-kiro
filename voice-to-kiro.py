@@ -10,6 +10,7 @@ from groq import Groq
 
 STT_MODEL = "whisper-large-v3-turbo"
 LLM_MODEL = "llama-3.3-70b-versatile"
+LLM_CLEANUP = False  # Set True to enable LLM post-cleanup (may alter meaning)
 RATE, CHANNELS, CHUNK = 16000, 1, 1024
 VK_F2 = 0x71
 WH_KEYBOARD_LL = 13
@@ -115,8 +116,8 @@ def process():
         raw = transcribe(audio)
         if not raw:
             return
-        cleaned = cleanup(raw)
-        do_paste(cleaned)
+        text = cleanup(raw) if LLM_CLEANUP else raw
+        do_paste(text)
     except Exception:
         pass
     finally:
