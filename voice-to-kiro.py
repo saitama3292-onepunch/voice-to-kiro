@@ -22,8 +22,11 @@ Clean it up:
 - Remove filler words (um, uh, 呃, 嗯, 那個, 就是)
 - Complete obviously unfinished sentences if the intent is clear
 - Keep the original meaning and tone exactly
-- If the input is in Chinese, output in Traditional Chinese (繁體中文, Taiwan style). NEVER output Simplified Chinese.
-- If English, output English. If mixed, keep mixed but Chinese parts must be Traditional.
+- LANGUAGE RULES (CRITICAL):
+  - Chinese parts MUST be Traditional Chinese (繁體中文, Taiwan style). Convert any Simplified Chinese to Traditional.
+  - English words/phrases that the user clearly spoke in English MUST stay in English. Do NOT translate them to Chinese.
+  - Technical terms, proper nouns, brand names (e.g. GitHub, Kiro, Python, API) MUST stay in their original language.
+  - If the user code-switches (混語, e.g. "我要用這個API去call那個endpoint"), preserve the mixed languages exactly.
 - Output ONLY the cleaned text, nothing else. No quotes, no explanation."""
 
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
