@@ -30,6 +30,9 @@ Clean it up:
   - Technical terms, proper nouns, brand names MUST stay in their original language.
 - Output ONLY the cleaned text, nothing else. No quotes, no explanation."""
 
+if "GROQ_API_KEY" not in os.environ:
+    ctypes.windll.user32.MessageBoxW(0, "GROQ_API_KEY not set.\nRun install.ps1 first.", "Voice-to-Kiro", 0x10)
+    sys.exit(1)
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
 _held = False
 _recording = False
