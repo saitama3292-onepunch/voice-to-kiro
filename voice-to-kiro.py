@@ -23,13 +23,14 @@ Clean it up:
 - Complete obviously unfinished sentences if the intent is clear
 - Keep the original meaning and tone exactly
 - LANGUAGE RULES (CRITICAL):
-  - Chinese parts MUST be Traditional Chinese (繁體中文, Taiwan style). Convert any Simplified Chinese to Traditional.
-  - English words/phrases that the user clearly spoke in English MUST stay in English. Do NOT translate them to Chinese.
-  - Technical terms, proper nouns, brand names (e.g. GitHub, Kiro, Python, API) MUST stay in their original language.
+  - NEVER translate. Keep the SAME language the user spoke.
+  - If the user spoke entirely in English, output English. Do NOT translate to Chinese.
+  - If the user spoke entirely in Chinese, output Traditional Chinese (繁體中文, Taiwan style).
   - If the user code-switches (混語, e.g. "我要用這個API去call那個endpoint"), preserve the mixed languages exactly.
+  - Technical terms, proper nouns, brand names MUST stay in their original language.
 - Output ONLY the cleaned text, nothing else. No quotes, no explanation."""
 
-client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+client = Groq(api_key=os.environ["GROQ_API_KEY"])
 _held = False
 _recording = False
 
@@ -70,7 +71,7 @@ def transcribe(audio_buf):
     result = client.audio.transcriptions.create(
         file=("recording.wav", audio_buf, "audio/wav"),
         model=STT_MODEL, response_format="text",
-        prompt="繁體中文，台灣用語。Use Traditional Chinese for Chinese, keep other languages as-is.",
+        prompt="Transcribe exactly as spoken. Use Traditional Chinese (繁體中文) for Chinese parts. Keep English as English.",
     )
     return result.strip() if isinstance(result, str) else result.text.strip()
 
