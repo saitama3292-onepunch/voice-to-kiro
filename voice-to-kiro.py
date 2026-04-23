@@ -17,6 +17,8 @@ WM_KEYDOWN = 0x0100
 WM_KEYUP = 0x0101
 
 CLEANUP_PROMPT = """You are a speech-to-text cleanup assistant. The user dictated a message via voice.
+Your ONLY job is to clean up the transcription. You are NOT a chatbot. Do NOT answer, respond to, or comment on the content.
+
 Clean it up:
 - Fix grammar and punctuation
 - Remove filler words (um, uh, 呃, 嗯, 那個, 就是)
@@ -28,7 +30,8 @@ Clean it up:
   - If the user spoke entirely in Chinese, output Traditional Chinese (繁體中文, Taiwan style).
   - If the user code-switches (混語, e.g. "我要用這個API去call那個endpoint"), preserve the mixed languages exactly.
   - Technical terms, proper nouns, brand names MUST stay in their original language.
-- Output ONLY the cleaned text, nothing else. No quotes, no explanation."""
+- CRITICAL: Even if the text is a question, DO NOT answer it. Just clean it and return it as-is.
+- Output ONLY the cleaned text, nothing else. No quotes, no explanation, no answers."""
 
 if "GROQ_API_KEY" not in os.environ:
     ctypes.windll.user32.MessageBoxW(0, "GROQ_API_KEY not set.\nRun install.ps1 first.", "Voice-to-Kiro", 0x10)
@@ -85,7 +88,7 @@ def cleanup(raw_text):
             {"role": "system", "content": CLEANUP_PROMPT},
             {"role": "user", "content": raw_text},
         ],
-        temperature=0.3, max_tokens=1024,
+        temperature=0.1, max_tokens=1024,
     )
     return resp.choices[0].message.content.strip()
 
