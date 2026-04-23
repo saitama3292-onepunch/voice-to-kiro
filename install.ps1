@@ -42,7 +42,7 @@ if (-not $key) {
 # Create tools directory and download script
 $toolsDir = "$env:USERPROFILE\tools"
 New-Item -ItemType Directory -Path $toolsDir -Force | Out-Null
-$scriptUrl = "https://raw.githubusercontent.com/islandcodestudios2026418/voice-to-kiro/main/voice-to-kiro.py"
+$scriptUrl = "https://raw.githubusercontent.com/saitama3292-onepunch/voice-to-kiro/main/voice-to-kiro.py"
 Invoke-WebRequest -Uri $scriptUrl -OutFile "$toolsDir\voice-to-kiro.py"
 Write-Host "Downloaded voice-to-kiro.py" -ForegroundColor Green
 

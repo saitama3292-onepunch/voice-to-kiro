@@ -21,7 +21,7 @@ Hold F2 → Record → Groq Whisper (speech-to-text) → Groq LLM (cleanup) → 
 Open PowerShell and run:
 
 ```powershell
-irm https://raw.githubusercontent.com/islandcodestudios2026418/voice-to-kiro/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/saitama3292-onepunch/voice-to-kiro/main/install.ps1 | iex
 ```
 
 It will ask for your Groq API key (get one free at [console.groq.com](https://console.groq.com)).
